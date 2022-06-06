@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head.ejs', { page: 'Profile'}) %>
+<body>
+
+<%- include('../partials/nav.ejs') %>
+
+<h2><%= user.name %></h2>
+<h3><%= user.email %></h3>
+
+<% if(editOK) { %>
+       <a href="/users/<%= user._id %>/edit">Edit Profile</a>
+<% } %>
+
+<h1>Badges</h1>
+<% if (user.badges.length > 0) { %>
+ <% for(let i=0; i < user.badges.length; i++) { %>
+       <a href="/parks/<%= allParks.findIndex(park => park.name === user.badges[i].name) %>"><img src="<%= user.badges[i].avatar %>" alt="<%= user.badges[i].name %>"></a>
+ <% } %>
+<% } %>
+    
+<h1>Parks Visited</h1>
+<% if (user.parks.length > 0) { %>
+    <ul>
+    <% for(let i=0; i < user.parks.length; i++) { %>
+           <li><a href="/parks/<%= allParks.findIndex(park => park.name === user.parks[i].name) %>"><%= user.parks[i].name %></a></li>
+    <% } %>
+    </ul>
+<% } %>
+</body>
+</html>

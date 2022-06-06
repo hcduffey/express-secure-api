@@ -1,0 +1,24 @@
+nav{
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   background: transparentize($color: $primary-color, $amount: .3);
+   color:$secondary-color;
+   height: 75px;
+   
+   a{
+      color: $secondary-color; 
+      font-size: 2em;
+      margin: 0 1em;
+   }
+   .navimage{
+       margin: 0 .5em;
+       height: 2.5em;
+       transition: $base-transition;
+       
+   }
+}
+.navimage:hover{
+    transform: scale(1.1);
+    
+   } 

@@ -1,0 +1,22 @@
+$base-font: 'Radio Canada', sans-serif;
+$primary-color: #143109;
+$secondary-color: #D0D6B3;
+$hover-color: lighten(#ffd700, 20%);
+$base-transition:  all 0.5s ease;
+
+
+
+@keyframes fadeIn {
+    0% { 
+       opacity: 0;
+       
+     }
+  
+  
+    100% {
+        opacity: 1;
+     }
+  
+  }
+
+  

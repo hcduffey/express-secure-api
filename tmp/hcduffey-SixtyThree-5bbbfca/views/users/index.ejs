@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head.ejs', { page: 'List Users'}) %>
+<body>
+
+   <%- include('../partials/nav.ejs') %> 
+<section class="userIndex">
+    <ul class="userList">
+    <% for(let i=0; i < users.length; i++) { %>
+        <li><img src="<%= users[i].avatar %>" alt="user image"> <a href="/users/<%= users[i]._id %>"> <%= users[i].name %> </a></li>
+    <% } %>
+    </ul>
+</section>    
+</body>
+</html>

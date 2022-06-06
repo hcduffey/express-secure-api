@@ -1,0 +1,11 @@
+body{
+    font-family: $base-font;
+}
+li{
+    font-size: 2em;
+}
+a{
+    text-decoration: none;
+    color: black;
+    transition: $base-transition;
+}

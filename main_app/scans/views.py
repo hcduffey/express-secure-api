@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from main_app.scans.models import Scan
 from main_app.scans.serializers import ScanSerializer, ScanSerializerGet
+import requests
 
 # Create your views here.
 
@@ -20,7 +21,8 @@ def scan_list(request):
 
     elif request.method == 'POST':
         data = JSONParser().parse(request)
-        serializer = ScanSerializer(data=data)
+        serializer = ScanSerializer(data=data, context={'request': request, 'branch_id': data['branch_id']})
+
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=201)
