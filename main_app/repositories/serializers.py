@@ -1,11 +1,12 @@
 from rest_framework import serializers
 from main_app.repositories.models import Repository
 from main_app.branches.models import Branch
+from main_app.branches.serializers import BranchSerializer
 
-class RepositorySerializer(serializers.HyperlinkedModelSerializer):
+class RepositorySerializer(serializers.ModelSerializer):
 
     languages = serializers.StringRelatedField(many=True, read_only=True)
-    branches = serializers.HyperlinkedRelatedField(view_name="branch_detail", read_only=True, many=True)
+    branches = BranchSerializer(many=True)
 
     class Meta:
         model = Repository
