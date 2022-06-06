@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from main_app.repositories.models import Repository
 from main_app.repositories.serializers import RepositorySerializer
+import requests
 
 # Create your views here.
 @csrf_exempt
@@ -17,7 +18,7 @@ def repository_list(request):
 
     elif request.method == 'POST':
         data = JSONParser().parse(request)
-        
+
         serializer = RepositorySerializer(data=data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
@@ -40,6 +41,20 @@ def repository_detail(request, pk):
 
     elif request.method == 'PUT':
         data = JSONParser().parse(request)
+
+        github_api = f'{data["url"]}/branches'
+        api_response = requests.get(github_api)
+        json_response = api_response.json()
+        
+        branches = []
+        for response in json_response:
+            branches.append({
+                    "url": f'https://www.github.com/{response["full_name"]}'},
+            )
+            
+        data["repositories"] = repos
+
+
         serializer = RepositorySerializer(repository, data=data, context={'request': request})
         if serializer.is_valid():
             serializer.save()

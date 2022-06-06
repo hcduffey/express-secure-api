@@ -9,3 +9,10 @@ class RepositorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Repository
         fields = ["id", "url", "branches", "languages"]
+
+    def update(self, instance, validated_data):
+        instance.url = validated_data.get('url', instance.url)
+        
+        
+
+        return instance

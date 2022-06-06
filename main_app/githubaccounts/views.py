@@ -28,7 +28,7 @@ def github_account_list(request):
         repos = []
         for response in json_response:
             repos.append({
-                    "url": f'https://www.github.com/{response["full_name"]}'},
+                    "url": f'https://api.github.com/{response["full_name"]}'},
             )
             
         data["repositories"] = repos
