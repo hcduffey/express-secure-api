@@ -43,19 +43,17 @@ def repository_detail(request, pk):
         data = JSONParser().parse(request)
 
         github_api = f'{data["url"]}/branches'
+        print(github_api)
         api_response = requests.get(github_api)
         json_response = api_response.json()
         
         branches = []
         for response in json_response:
             branches.append({
-                    "url": f'https://www.github.com/{response["full_name"]}'},
+                    "name": f'{data["url"]}/branches/{response["name"]}'},
             )
             
-        data["repositories"] = repos
-
-
-        serializer = RepositorySerializer(repository, data=data, context={'request': request})
+        serializer = RepositorySerializer(repository, data=data, context={'request': request, 'branches': branches})
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data)
