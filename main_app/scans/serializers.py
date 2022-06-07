@@ -55,25 +55,37 @@ class ScanSerializer(serializers.ModelSerializer):
         # get the branch that the new scan will be associated with
         branch = Branch.objects.get(pk=self.context['branch_id'])
 
+        print("Downloading zip archive")
+        sys.stdout.flush()
         # download the zip archive of the selected branch
         branch_url = branch.name
         github_api = branch_url.replace("branches", "zipball")
         filename = download_file(github_api)
+        print(filename + " downloaded")
+        sys.stdout.flush()
 
         # extract the zip file
         node_source = PATH
-        print(node_source)
+        print("unzipping archive..")
+        sys.stdout.flush()
         with zipfile.ZipFile(filename, 'r') as zip_ref:
             zip_ref.extractall(PATH)
             node_source += "/" + zip_ref.filelist[0].filename
-        print(node_source)
+        print("zip decompressed: " + node_source)
+        sys.stdout.flush()
         #perform the scan of the unzipped files
+        print("Begining scan...")
+        sys.stdout.flush()
         scanner = NJSScan([node_source], json=True, check_controls=False)
         scanner.scan()
+        print("...scan complete")
+        sys.stdout.flush()
 
         #create the scan record in the database
         new_scan = Scan.objects.create(branch=branch,**validated_data)
 
+        print("parsing results")
+        sys.stdout.flush()
         #parse the scan results and store the vulnerabilties in the database
         for finding_type in scanner.result:
 
@@ -96,7 +108,8 @@ class ScanSerializer(serializers.ModelSerializer):
                         }
                         # store the vulnerability in the database, associated with that scan
                         Vulnerability.objects.create(scan=new_scan, **vulnerability) # this is where the create happens
-        
+        print("results stored in db...")
+        sys.stdout.flush()
         return new_scan
 
 class ScanSerializerGet(serializers.ModelSerializer):
