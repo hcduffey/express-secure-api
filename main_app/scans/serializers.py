@@ -10,7 +10,7 @@ from njsscan.njsscan import NJSScan
 
 # https://stackoverflow.com/questions/16694907/download-large-file-in-python-with-requests
 def download_file(url):
-    local_filename = "/tmp/"
+    local_filename = "/app/tmp/"
     local_filename += url.split('/')[-3]
     local_filename += "-"
     local_filename += url.split('/')[-1]
@@ -47,7 +47,7 @@ class ScanSerializer(serializers.ModelSerializer):
         filename = download_file(github_api)
 
         # extract the zip file
-        node_source = "/tmp/"
+        node_source = "/app/tmp/"
         with zipfile.ZipFile(filename, 'r') as zip_ref:
             zip_ref.extractall('tmp')
             node_source += zip_ref.filelist[0].filename
