@@ -32,7 +32,7 @@ def github_account_list(request):
             )
             
         data["repositories"] = repos
-        serializer = GitHubAccountSerializer(data=data, context={'request': request})
+        serializer = GitHubAccountSerializer(data=data, context={'request': request, 'repositories': data["repositories"]})
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=201)

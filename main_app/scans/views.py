@@ -21,11 +21,14 @@ def scan_list(request):
 
     elif request.method == 'POST':
         data = JSONParser().parse(request)
+
         serializer = ScanSerializer(data=data, context={'request': request, 'branch_id': data['branch_id']})
 
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=201)
+        
+        print(serializer.fields)
         return JsonResponse(serializer.errors, status=400)
 
 @csrf_exempt

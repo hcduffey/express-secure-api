@@ -6,7 +6,7 @@ from main_app.branches.serializers import BranchSerializer
 class RepositorySerializer(serializers.ModelSerializer):
 
     languages = serializers.StringRelatedField(many=True, read_only=True)
-    branches = BranchSerializer(many=True)
+    branches = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Repository
@@ -18,6 +18,9 @@ class RepositorySerializer(serializers.ModelSerializer):
         print(self.context['branches'])
         print(instance)
         for branch_data in self.context['branches']:
-            Branch.objects.create(repository=instance, **branch_data)
+            try:
+                Branch.object.get(name=self.context['branches'])
+            except:
+                Branch.objects.create(repository=instance, **branch_data)
 
         return instance

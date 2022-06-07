@@ -10,8 +10,7 @@ class Vulnerability(models.Model):
     match_line = models.CharField(max_length=100, blank=False)
     description = models.CharField(max_length=200, blank=False)
 
-    severity_choices = [("H","High"), ("M","Medium"), ("L", "Low"), ("I", "Info")]
-    severity = models.CharField(max_length=100, blank=False, choices=severity_choices)
+    severity = models.CharField(max_length=100, blank=False)
 
     scan = models.ForeignKey(Scan, related_name="vulnerabilities", on_delete=models.CASCADE, default=1)
 

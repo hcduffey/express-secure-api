@@ -41,7 +41,7 @@ def repository_detail(request, pk):
 
     elif request.method == 'PUT':
         data = JSONParser().parse(request)
-
+        
         github_api = f'{data["url"]}/branches'
         print(github_api)
         api_response = requests.get(github_api)
