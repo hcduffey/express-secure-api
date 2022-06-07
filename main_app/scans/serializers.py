@@ -8,6 +8,7 @@ from datetime import datetime
 import zipfile
 from njsscan.njsscan import NJSScan
 import os
+import sys
 
 PATH = os.environ['HOME']+'/tmp'
 
@@ -17,7 +18,10 @@ def download_file(url):
 
     if os.path.exists(PATH):
         print("path exists")
+        sys.stdout.flush()
     else:
+        print("creating temp dir: " + PATH)
+        sys.stdout.flush()
         os.makedirs(PATH)
 
     local_filename = PATH + "/"
