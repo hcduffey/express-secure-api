@@ -7,10 +7,20 @@ import requests
 from datetime import datetime
 import zipfile
 from njsscan.njsscan import NJSScan
+import os
+
+PATH = os.environ['HOME']+'/tmp'
 
 # https://stackoverflow.com/questions/16694907/download-large-file-in-python-with-requests
 def download_file(url):
-    local_filename = "./"
+ 
+
+    if os.path.exists(PATH):
+        print("path exists")
+    else:
+        os.makedirs(PATH)
+
+    local_filename = PATH + "/"
     local_filename += url.split('/')[-3]
     local_filename += "-"
     local_filename += url.split('/')[-1]
@@ -47,11 +57,12 @@ class ScanSerializer(serializers.ModelSerializer):
         filename = download_file(github_api)
 
         # extract the zip file
-        node_source = "./"
+        node_source = PATH
+        print(node_source)
         with zipfile.ZipFile(filename, 'r') as zip_ref:
-            zip_ref.extractall('tmp')
-            node_source += zip_ref.filelist[0].filename
-
+            zip_ref.extractall(PATH)
+            node_source += "/" + zip_ref.filelist[0].filename
+        print(node_source)
         #perform the scan of the unzipped files
         scanner = NJSScan([node_source], json=True, check_controls=False)
         scanner.scan()
@@ -63,7 +74,9 @@ class ScanSerializer(serializers.ModelSerializer):
         for finding_type in scanner.result:
 
             for category in scanner.result.get(finding_type):
-
+                if type(scanner.result.get(finding_type)) is list:
+                    continue
+                    
                 for _ in scanner.result.get(finding_type).get(category):
                     description = scanner.result.get(finding_type).get(category)['metadata']['cwe']
                     severity = scanner.result.get(finding_type).get(category)['metadata']['severity']
