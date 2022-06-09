@@ -15,12 +15,8 @@ class RepositorySerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.url = validated_data.get('url', instance.url)
         
-        print(self.context['branches'])
-        print(instance)
         for branch_data in self.context['branches']:
-            try:
-                Branch.object.get(name=self.context['branches'])
-            except:
+            if(len(Branch.objects.all().filter(name=branch_data['name'])) == 0):
                 Branch.objects.create(repository=instance, **branch_data)
 
         return instance
