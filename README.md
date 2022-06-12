@@ -123,35 +123,35 @@ No prequisites required.
 
 The following endpoints are provided by the API:
 
-Github Accounts (/githubaccounts)
+### Github Accounts (/githubaccounts/)
 
-* Create (POST) -- will import the account based on the "owner" value and import that accounts repositories
+* Create (POST /githubaccounts/) -- will import the account based on the "owner" value and import that accounts repositories
 * Read (GET /githubaccounts/ /githubaccounts/id/) -- normal Get
 * Update (PUT /githubaccounts/id/) -- Name changes (owner) are not allowed, but a resyncing repositories will occur
 * Delete (DELETE /githubaccounts/id/) -- normal Delete, will also cascade the deletion of that accounts repositories, branches, scans and vulnerabilities.
 
-Repositories (/repositories)
+### Repositories (/repositories)
 
 * Create -- there is no creation of repositories. Repositories are imported with the creation or update of a GitHub account.
 * Read (GET /repositories/ & /repositories/id/) -- normal read
 * Update (PUT /repositories/id/) -- Will sync (or re-sync) Branches in that repository
 * Delete -- Delete of a repository isn't supported
 
-Branches (/branches)
+### Branches (/branches)
 
 * Create -- Creating branches isn't supported
 * Read (GET /branches & /branches/id) -- Normal read
 * Update -- Updating branches isn't supported
 * Delete -- Deleting branches isn't supported
 
-Scans (/scans/)
+### Scans (/scans/)
 
 * Create (POST /scans/) -- Takes in scan name, and branch_id, pulls zip file from github, expands zip, scans files, fills associated vulnerabilties
 * Read (GET /scans/ & /scans/id/) -- Normal read
 * Update -- Updating scans is not supported
 * Delete -- Deleting scans is not supported
 
-Vulnerabilities (/vulnerabilities/)
+### Vulnerabilities (/vulnerabilities/)
 
 * Create -- Vulnerabilities are "created" with the results of the scan, there is no API endpoint for creating vulnerabilities supported
 * Read (GET /vulnerabilities/ /vulnerabilities/id) -- Normal read
