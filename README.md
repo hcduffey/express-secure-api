@@ -130,14 +130,14 @@ The following endpoints are provided by the API:
 * Update (PUT /githubaccounts/id/) -- Name changes (owner) are not allowed, but a resyncing repositories will occur
 * Delete (DELETE /githubaccounts/id/) -- normal Delete, will also cascade the deletion of that accounts repositories, branches, scans and vulnerabilities.
 
-### Repositories (/repositories)
+### Repositories (/repositories/)
 
 * Create -- there is no creation of repositories. Repositories are imported with the creation or update of a GitHub account.
 * Read (GET /repositories/ & /repositories/id/) -- normal read
 * Update (PUT /repositories/id/) -- Will sync (or re-sync) Branches in that repository
 * Delete -- Delete of a repository isn't supported
 
-### Branches (/branches)
+### Branches (/branches/)
 
 * Create -- Creating branches isn't supported
 * Read (GET /branches & /branches/id) -- Normal read
